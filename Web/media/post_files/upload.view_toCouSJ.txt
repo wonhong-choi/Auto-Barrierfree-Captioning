@@ -1,0 +1,18 @@
+def upload_view(request):
+    if request.method == 'POST':
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = form.cleaned_data['file']
+            video = Video(file=file)
+            video.save()
+            
+            input_filepath = video.get_file_path()
+            
+            channel_name = 'caption_processing_channel'
+            message = json.dumps({'input_filepath':input_filepath})
+            async_to_sync(CaptionProcessingConsumer.as_asgi())(channel_name).send(message)
+            
+            return JsonResponse({'status': 'success'})
+    else:
+        form = VideoForm()
+    return render(request, 'sub_test.html', {'form':form})

@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+{% include 'test/head.html' %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center">
+
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="{% url 'user:index' %}" class="logo d-flex align-items-center">
+      <h1>BarrierFree_Sub<span>!</span></h1>
+      </a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url 'user:index' %}">Home</a></li>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/#team">Team</a></li>
+          <li><a href="{% url 'user:blog' %}" class="active">게시판</a></li>
+          <li><a href="{% url 'user:upload' %}">자막 생성</a></li>
+          <li class="dropdown"><a href="#"><span></span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              <li><a href="#">Drop Down 1</a></li>
+              <li><a href="#">Drop Down 2</a></li>
+              <li><a href="#">Drop Down 3</a></li>
+            </ul>
+          </li>
+          <li><a href="login.html">Log out</a></li>
+        </ul>
+      </nav><!-- .navbar -->
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div>
+  </header><!-- End Header -->
+  <!-- End Header -->
+
+  <!-- breadcrumbs Start-->
+  <main id="main">
+    <div class="breadcrumbs">
+      <div class="page-header d-flex align-items-center" style="background-image: url('');">
+          <div class="container position-relative">
+              <div class="row d-flex justify-content-center">
+                  <div class="col-lg-6 text-center">
+                      <h2>Create_Blog</h2>
+                      <p>생성된 자막을 공유를 위해 블로그 작성 공간!</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <nav>
+          <div class="container">
+              <ol>
+                  <li><a href="{% url 'user:index' %}">Home</a></li>
+                  <li>Share_blog</li>
+              </ol>
+          </div>
+      </nav>
+    </div>
+    <!-- breadcrumbs End-->
+
+    <!--Search bar Start-->
+    <div class="container1">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control mt-5" placeholder="검색어를 입력하세요" id="search-input" oninput="searchTable(this)">
+          </div>
+        </div>
+      </div>
+    </div>
+   <!--Search bar End-->
+
+    <table id="post-table" class="table table-striped" style="max-height: 400px; overflow-y: scroll;">
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>날짜</th>
+          <th>view</th>
+          <th>파일 이름</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for list in postlist|slice:":100" %} {# 최대 10개의 게시글 표시 #}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            <div class="d-flex align-items-center">
+              <a href="#" class="post-link" data-toggle="modal" data-target="#post-modal" data-title="{{ list.title }}" data-content="{{ list.content }}" data-file="{{ list.file.url }}"><span class="post-title">{{ list.title }}</span></a>
+            </div>
+          </td>
+          <td>{{ list.author }}</td>
+          <td>{{ list.date }}</td>
+          <td>{{ list.view_count }}</td>
+          <td><a href="{% url 'user:download_file' post_id=list.id %}">{{ list.get_filename }}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="container text-center mt-3">
+      <button class="btn btn-primary mb-3" onclick="location.href='/test'">작성하기</button>
+    </div>
+  </main><!-- End #main -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="post-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="post-modal-label"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4 class="modal-title" id="post-modal-title">제목:</h4>
+          <p id="post-modal-content">내용:</p>
+          <a id="post-modal-file" href="" download>파일 다운로드 : <span id="post-modal-file-name"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  {% include 'test/script.html' %}
+  {% include 'test/footer.html' %}
+  <script src="{% static 'js/blog.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-dLgMx6iBGiSc7zNIR9v3e2e0oJmKYr76Yg/Cz5kuH+yamUyIyBoKXc+qTd3c3O7HaPnpde5xopzqUYf1ZnauDg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+</body>
+
+</html>

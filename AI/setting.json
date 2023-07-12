@@ -1,0 +1,7 @@
+{
+    "splitter_model" : "/home/wonhong/workspace/AIVLE/BigProject/Barrier-free-subtitles/ai/splitter/models/paper_mrx_pre_trained_weights.pth",
+    "sfx_label2eng_sound" : "/home/wonhong/workspace/AIVLE/BigProject/Barrier-free-subtitles/ai/datas/esc50_data/label2eng_sound.pkl",
+    "sfx_label2kor_sound" : "/home/wonhong/workspace/AIVLE/BigProject/Barrier-free-subtitles/ai/datas/esc50_data/label2kor_sound.pkl",
+    "base_checkpoint_path" : "/home/wonhong/workspace/AIVLE/BigProject/Barrier-free-subtitles/ai/BEATs/models/BEATs_iter3_plus_AS2M.pt",
+    "sfx_checkpoint_path" : "/home/wonhong/workspace/AIVLE/BigProject/Barrier-free-subtitles/ai/BEATs/models/finetuned/epoch=17-step=1440-v1.ckpt"
+}

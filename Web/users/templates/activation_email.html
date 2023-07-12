@@ -1,0 +1,8 @@
+{% autoescape off %}
+    안녕하세요 눈으로 듣는 배리어프리 서비스에 오신걸 환영합니다!
+
+    아래 링크를 클릭하면 회원가입 인증이 완료됩니다.
+
+    회원가입 링크 : {{ domain }}{% url 'user:activate' uidb64=uid token=token %}
+
+{% endautoescape %}

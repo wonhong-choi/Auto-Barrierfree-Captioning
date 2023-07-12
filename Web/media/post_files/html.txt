@@ -1,0 +1,47 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Caption Processing</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // WebSocket connection
+        var socket = new WebSocket('ws://localhost:8000/ws/caption-processing/');
+
+        socket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+            var filePath = data.file_path;
+
+            // Display a message indicating the processing is complete
+            var message = document.createElement('p');
+            message.textContent = 'Caption processing is complete. Download the captions: ';
+
+            // Create a download link for the captions file
+            var link = document.createElement('a');
+            link.href = filePath;
+            link.download = 'captions.txt';
+            link.textContent = 'Download Captions';
+
+            // Append the message and link to the HTML document
+            document.body.appendChild(message);
+            document.body.appendChild(link);
+        };
+
+        function startProcessing() {
+            // Send a message to the server to start processing
+            var fileName = $('#fileInput').prop('files')[0].name;
+            socket.send(JSON.stringify({ file_path: fileName }));
+
+            // Show a processing message to indicate that the action has started
+            $('#processingMessage').text('Caption processing is in progress. Please wait...');
+        }
+    </script>
+</head>
+<body>
+    <h1>Caption Processing</h1>
+    <input type="file" id="fileInput">
+    <button onclick="startProcessing()">Start Processing</button>
+    <p id="processingMessage"></p>
+</body>
+</html>

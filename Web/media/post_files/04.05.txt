@@ -1,0 +1,9 @@
+https://datascienceschool.net/03%20machine%20learning/03.01.02%20KoNLPy%20%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%B2%98%EB%A6%AC%20%ED%8C%A8%ED%82%A4%EC%A7%80.html
+https://github.com/Kyubyong/wordvectors
+https://fasttext.cc/docs/en/options.html
+https://fasttext.cc/docs/en/crawl-vectors.html
+https://colab.research.google.com/drive/19A-pQAVqzylt9HJ9hMadRbf05PqBDdz8
+https://radimrehurek.com/gensim/auto_examples/tutorials/run_word2vec.html#sphx-glr-auto-examples-tutorials-run-word2vec-py
+https://datascienceschool.net/03%20machine%20learning/03.01.03%20Scikit-Learn%EC%9D%98%20%EB%AC%B8%EC%84%9C%20%EC%A0%84%EC%B2%98%EB%A6%AC%20%EA%B8%B0%EB%8A%A5.html
+https://docs.python.org/3/howto/regex.html
+https://peps.python.org/pep-0008/

@@ -1,0 +1,489 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="ko">
+  {% include 'test/head.html' %}
+    <link href="{% static 'css/lrf.css' %}" rel="stylesheet">
+    <link href="{% static 'css/lrf2.css' %}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;500;700&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center">
+        <h1>눈으로 듣는 배리어프리<br> 자막 서비스<span>!</span></h1>
+      </a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="#hero">홈</a></li>
+          <li><a href="#about">정보</a></li>
+          <li><a href="#team">팀원</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'user:blog' %}">자막 게시판</a></li>
+          <li><a href="{% url 'user:upload' %}">자막 생성</a></li>
+          <li class="dropdown"><a href="#"><span>{% if user.nickname %}{{ user.nickname }}{% else %}{{ user.username }}{% endif %}</span> <i class="bi bi-person-circle"></i></a>
+            <ul>
+              <li><a href="{% url 'user:mypage' user.id %}">내정보</a></li>
+              <li><a href="{% url 'user:my_post' %}">내가 쓴 글</a></li>
+              <li><a href="{% url 'user:logout' %}">로그아웃</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li><a href="{% url 'user:blog' %}" onclick="checkLogin()">자막 게시판</a></li>
+          <li><a href="{% url 'user:upload' %}" >자막 생성</a></li>
+          <li><a href="" class="js-activation-button">로그인</a></li>
+          {% endif %}
+        </ul>
+      </nav><!-- .navbar -->
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+    </div>
+  </header><!-- End Header -->
+  <!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero">
+    <div class="container position-relative">
+      <div class="row gy-5" data-aos="fade-in">
+        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
+          <h2>눈으로 듣는 <span>배리어 프리<br> 자막 서비스</span></h2>
+          <p>소리를 눈에 보이는 자막으로!<br>
+            <br>
+            눈으로 듣는 배리어프리 자막<br>
+            <br>
+            서비스에 오신걸 환영합니다!</p>
+          <div class="d-flex justify-content-center justify-content-lg-start">
+            <a href="{% url 'user:upload' %}" class="btn-get-started mt-5">자막 생성 하기</a>
+          </div>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2">
+          <img src="{% static '/img/subtitles.png' %}" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100">
+        </div>
+      </div>
+    </div>
+
+    <div class="icon-boxes position-relative">
+      <div class="container position-relative">
+        <div class="row gy-4 mt-5">
+
+          <div class="col-xl-4 col-md-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-easel"></i></div>
+              <h4 class="title"><a href="../static/img/final2.mp4" class="glightbox play-btn">시연 영상 보기</a></h4>
+            </div>
+          </div><!--End Icon Box -->
+
+          <div class="col-xl-4 col-md-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-chat-square-text"></i></div>
+              <h4 class="title"><a href="{% url 'user:blog' %}" class="stretched-link" onclick="checkLogin()">자막 공유 , 다운로드</a></h4>
+            </div>
+          </div><!--End Icon Box -->
+
+          <div class="col-xl-4 col-md-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-chat-square-text"></i></div>
+              <h4 class="title"><a href="#about" class="stretched-link">배리어 프리란?</a></h4>
+            </div>
+          </div><!--End Icon Box -->
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </section>
+  <!-- End Hero Section -->
+
+  <main id="main">
+
+    <!-- ======= About Us Section ======= -->
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>배리어 프리란?</h2>
+          <p><strong>‘배리어 프리(Barrier Free)’는 장애를 뜻하는 ‘배리어(barrier)’와 벗어나다는 뜻의 ‘프리(free)’의 합성어이며</strong></p>
+          <p class="mt-2">장애인에게 불편한 물리적·심리적·제도적 장벽을 허물어 장애인과 비장애인이 함께 살기 좋은 사회를 만들자는 운동을 의미합니다.</p>
+          <p class="mt-2">이를 통해 저희는 청각 장애인분들, 한국어가 미숙한분들, 소리없이 영상을 보시는 분들을 위해 배리어 프리 자막을 원하는 영상에 저희 서비스를 통해 자막과 함께 시청 할 수 있습니다<p>
+        </div>        
+
+        <div class="row gy-4">
+          <div class="col-lg-6">
+            <h3 style="color : white">배리어 프리 영화란?</h3>
+            <img src="../static/img/index_logo1.png" class="img-fluid rounded-4 mb-4" alt="">
+            <p style="color : white">배리어 프리 영화란?<br>
+              <br>
+              시·청각장애인, 어린이와 노인, 때론 한국어가 서툰 외국인까지 모두가 즐길 수 있도록 만들어지는 영화이기도 하죠.<br>
+              <br>
+              기존 영화에 화면을 설명해 주는 ‘음성해설’과<br>
+              <br>
+              화자 및 대사, 음악, 소리 정보를 알려주는 ‘배리어프리자막’을 넣어<br>
+              <br>
+              모든 사람이 함께 즐길 수 있도록 제작하고 있습니다.</p>
+          </div>
+
+          <div class="col-lg-6">
+            <h3 style="color : white">배리어 프리 영화란?</h3>
+              <div class="position-relative mt-4">
+                <img src="../static/img/Group_12.png" class="img-fluid rounded-4" alt="">
+                <a href="https://youtu.be/k4cGjHOwKPA" class="glightbox play-btn"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- End About Us Section -->
+    <!-- ======= Our Services Section ======= -->
+    <section id="services" class="services sections-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>우리의 서비스</h2>
+          <p>저희가 제공하고 있는 서비스를 즐겨 보세요!</p>
+        </div>
+
+        <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="col-lg-6 col-md-6">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-easel"></i>
+              </div>
+              <h3>베리어프리 자막 생성 하러가기!</h3>
+              <p>영상을 업로드 해주시면 ai가 생동감 넘치는 자막을 만들어 드립니다!</p>
+              <a href="{% url 'user:upload' %}" class="readmore stretched-link">시작하기! <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div><!-- End Service Item -->
+
+           <div class="col-lg-6 col-md-6">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-chat-square-text"></i>
+              </div>
+              <h3>자막을 공유하거나 다운로드 받으세요!</h3>
+              <p>생성된 자막을 다른 유저에게 공유 하시거나, 다른 유저가 공유한 자막을 다운로드 받으세요!</p>
+              <a href="{% url 'user:blog' %}" class="readmore stretched-link" onclick="checkLogin()">구경 하러 가기~! <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div><!-- End Service Item -->
+        </div>
+      </div>
+    </section><!-- End Our Services Section -->
+    
+    <!-- ======= Our Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container" data-aos="fade-up">
+    
+        <div class="section-header">
+          <h2>Our Team</h2>
+          <p>충남/충북 29조 조원을 소개합니다!</p>
+        </div>
+    
+        <div class="row gy-4">
+          <div class="col-sm-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="member">
+              <img src="../static/img/wo.png" class="img-fluid" alt="">
+              <h4>송우영</h4>
+              <span>FrontEnd</span>
+              <div class="social">
+                <a href=""><i class="bi bi-github"></i></a>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+          <div class="col-sm-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="member">
+              <img src="../static/img/jw.png" class="img-fluid" alt="">
+              <h4>김재욱</h4>
+              <span>BackEnd</span>
+              <div class="social">
+                <a href=""><i class="bi bi-github"></i></a>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+          <div class="col-sm-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+              <img src="../static/img/cwh.png" class="img-fluid" alt="">
+              <h4>최원홍</h4>
+              <span>AI 모델링</span>
+              <div class="social">
+                <a href=""><i class="bi bi-github"></i></a>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+          <div class="col-sm-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+            <div class="member">
+              <img src="../static/img/hy.png" class="img-fluid" alt="">
+              <h4>이현원</h4>
+              <span>AI 모델링</span>
+              <div class="social">
+                <a href=""><i class="bi bi-github"></i></a>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+        </div>
+      </div>
+    </section><!-- End Our Team Section -->
+    
+    
+        
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4">
+            <div class="content px-xl-5">
+              <h3>자주 나오는 <strong>질문</strong></h3>
+              {% comment %} <p class="mt-5">
+                자주 나오는 질문은 여기서 해결하세요!
+              </p> {% endcomment %}
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+
+            <div class="accordion accordion-flush" id="faqlist" data-aos="fade-up" data-aos-delay="100">
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
+                    <span class="num">1.</span>
+                    자막 생성은 무료 인가요?
+                  </button>
+                </h3>
+                <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    네, 저희 서비스는 현재 무료로 제공하고 있습니다.<br class="mt-2"> 자막이 필요한 영상의 베리어프리 자막을 마음껏 만들어보세요.
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
+                    <span class="num">2.</span>
+                    모든 형식의 영상 자막을 만들수 있나요??
+                  </button>
+                </h3>
+                <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    네, 저희 서비스는 대부분의 주요 영상 형식을 지원합니다. 만약 현재 지원하지 않는 형식이 있다면 mp4파일과 같이 많이 사용되는 영상 형식으로 변환 후 사용해보세요.
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
+                    <span class="num">3.</span>
+                    자막을 수정 할 수 있나요?
+                  </button>
+                </h3>
+                <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    네, 자막은 언제든 수정 할 수 있습니다. 자막파일을 메모장 등의 텍스트 편집기로 열어보세요.
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-4">
+                    <span class="num">4.</span>
+                    모든 언어의 영상을 지원하나요?
+                  </button>
+                </h3>
+                <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    저희 서비스는 현재 영어와 한국어에 대한 지원을 하고 있어요. 추후 더 많은 언어에 대해 자막을 만들 수 있도록 업데이트 예정이에요.
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Frequently Asked Questions Section -->
+
+    
+    <!-- login, register, forgotpw modal -->
+    <section id="lrf" class="lrf">
+    <div class="cd-signin-modal js-signin-modal">
+      <div class="cd-signin-modal__container">
+        <ul class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
+          <li><a href="#0" data-signin="login" data-type="login">로그인</a></li>
+          <li><a href="#0" data-signin="signup" data-type="signup">회원가입</a></li>
+        </ul>
+    
+        <div class="cd-signin-modal__block js-signin-modal-block" data-type="login"> <!-- log in form -->
+          <form method="POST" action="{% url 'user:login' %}" class="cd-signin-modal__form">
+            {% csrf_token %}
+            <p class="cd-signin-modal__fieldset">
+              <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signin-email">E-mail</label>
+              <input name="email" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email" type="email" placeholder="이메일" required>
+              <span class="cd-signin-modal__error">Error message here!</span>
+            </p>
+    
+            <p class="cd-signin-modal__fieldset">
+              <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password" required>Password</label>
+              <input name="password" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="password"  placeholder="비밀번호">
+              <span class="cd-signin-modal__error">Error message here!</span>
+            </p>
+     
+            <p class="cd-signin-modal__fieldset">
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="로그인">
+            </p>
+            <div class="row">
+              <div class="col">
+                <p class="cd-signin-modal__fieldset">
+                  <a class="naver-login-button" href="{% provider_login_url 'naver' %}">
+                    <img src="../static/img/btnG_완성형.png" alt="네이버 로그인" width="250px" height="65px">
+                  </a>
+                </p>
+              </div>
+              
+                <div class="col">
+                  <p class="cd-signin-modal__fieldset">
+                    <a class="kakao-login-button" href="{% provider_login_url 'kakao' %}">
+                      <img src="../static/img/kakao_login_large_narrow.png" alt="카카오 로그인" width="250px" height="65px">
+                    </a>
+                  </p>
+                </div>
+              </div>
+            
+          </form>
+          
+          <p class="cd-signin-modal__bottom-message js-signin-modal-trigger"><a href="#0" data-signin="reset">비밀번호를 잊었나요?</a></p>
+        </div> <!-- cd-signin-modal__block -->
+    
+        <div class="cd-signin-modal__block js-signin-modal-block" data-type="signup"> <!-- sign up form -->
+          <form method="POST" action="{% url 'user:signup' %}" class="cd-signin-modal__form">
+            {% csrf_token %}
+            <p class="cd-signin-modal__fieldset">
+              <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">Username</label>
+              <input name="nickname" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="닉네임" required>
+            </p>
+    
+            <p class="cd-signin-modal__fieldset">
+              <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">E-mail</label>
+              <input name="email" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="이메일" required>
+            </p>
+    
+            <p class="cd-signin-modal__fieldset">
+              <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Password</label>
+              <input name="password" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password"  placeholder="비밀번호" required>
+            </p>
+            <p class="cd-signin-modal__fieldset">
+              <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">Re_Password</label>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password"  placeholder="비밀번호 재입력" required>
+            </p>
+    
+            <p class="cd-signin-modal__fieldset">
+              <input type="checkbox" id="accept-terms-2" class="cd-signin-modal__input me-1" required>
+              <label for="accept-terms">만14세 이상입니다</label>
+            </p>
+            <p class="cd-signin-modal__fieldset">
+              <input type="checkbox" id="accept-terms" class="cd-signin-modal__input me-1" required>
+              <label for="accept-terms-2">(필수)회원가입 이용 약관에 동의합니다. <a href="https://plip.kr/pcc/eb90acbf-fdc5-49c9-ab97-495b86eff48e/consent/1.html" id="open-terms-modal">약관 보기</a></label>
+            </p>
+            
+            <div id="terms-modal" class="terms-modal">
+              <div class="terms-modal-content">
+                <iframe src="https://plip.kr/pcc/7f8b391c-e3e7-4847-8218-4ec213087f4c/consent/4.html" style="width: 100%; height: 400px;"></iframe>
+                <button id="agree-button" class="btn btn-primary">동의하기</button>
+              </div>
+            </div>           
+  
+            <p class="cd-signin-modal__fieldset">
+              <input id="signupButton" class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" type="submit1" value="계정 만들기">
+            </p>
+
+            <div id="emailConfirmationModal" class="modal">
+              <div class="modal-content">
+                <span class="close mt-3">&times;</span>
+                <h2>가입 확인 이메일이 전송되었습니다</h2>
+                <p>작성한 이메일로 가입 확인 이메일을 보냈습니다. 이메일을 확인하여 계정을 활성화해주세요.</p>
+                <button class="btn-ok mt-3"><a href="/">확인</a></button>
+              </div>
+            </div>
+
+          </form>
+        </div> <!-- cd-signin-modal__block -->    
+        <div class="cd-signin-modal__block js-signin-modal-block" data-type="reset"> <!-- reset password form -->
+          <p class="cd-signin-modal__message">비밀번호를 잊었나요? 이메일을 입력 해주시면 이메일로 비밀번호 초기화 관련 이메일을 전송해드릴게요!</p>
+    
+          <form method="POST" action="{% url 'user:password_reset' %}" class="cd-signin-modal__form">
+            {% csrf_token %}
+            <p class="cd-signin-modal__fieldset">
+              <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="reset-email">E-mail</label>
+              <input name=resetemail class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="reset-email" type="email" placeholder="E-mail">
+            </p>
+            <p class="cd-signin-modal__fieldset">
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" type="submit" value="Reset password">
+            </p>
+          </form>
+          <p class="cd-signin-modal__bottom-message js-signin-modal-trigger"><a href="#0" data-signin="login">Back to log-in</a></p>
+        </div> <!-- cd-signin-modal__block -->
+        <a href="#0" class="cd-signin-modal__close js-close">Close</a>
+      </div> <!-- cd-signin-modal__container -->
+    </div> <!-- cd-signin-modal -->
+    </section>
+  <!-- END login, register, forgotpw modal -->
+  </main><!-- End #main -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  {% include 'test/script.html' %}
+  {% include 'test/footer.html' %}
+  <script src="{% static 'js/lrf.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // 모달 기능을 처리하기 위한 JavaScript 코드
+    document.getElementById("open-terms-modal").addEventListener("click", function(e) {
+      e.preventDefault(); // 기본 하이퍼링크 동작 방지
+      document.getElementById("terms-modal").style.display = "block"; // 모달 보이기
+    });
+  
+    document.getElementById("terms-modal").addEventListener("click", function(e) {
+      if (e.target === this) {
+        this.style.display = "none"; // 모달 외부를 클릭하면 모달 숨기기
+      }
+    });
+  
+    document.getElementById("agree-button").addEventListener("click", function(e) {
+      e.preventDefault(); // 기본 버튼 동작 방지
+      document.getElementById("accept-terms").checked = true; // 체크박스 선택하기
+      document.getElementById("terms-modal").style.display = "none"; // 모달 숨기기
+    });
+    
+    function checkLogin() {
+      if (!{% if user.is_authenticated %}true{% else %}false{% endif %}) {
+        alert('자막 게시판은 로그인 후 이용 가능합니다');
+        
+        // 로그인 모달 열기
+        var modal = document.getElementById('cd-signin-modal__container');
+        modal.style.display = 'block';
+        
+        return false;
+      }
+    }
+
+    function checkEmail() {
+      {% if not user.is_active %}
+        alert('작성한 이메일로 가입 확인 이메일을 보냈습니다. 이메일을 확인하여 계정을 활성화해주세요');
+        return false;
+      {% endif %}
+    }   
+  </script>
+  {% if message %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endif %}
+</body>
+</html>

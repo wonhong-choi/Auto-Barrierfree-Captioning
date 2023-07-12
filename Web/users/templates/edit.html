@@ -1,0 +1,9 @@
+<form method="POST">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col form-group">
+        <textarea name="contents" class="form-control" placeholder="여기에 댓글을 남겨주세요!*" required></textarea>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">작성</button>
+</form>

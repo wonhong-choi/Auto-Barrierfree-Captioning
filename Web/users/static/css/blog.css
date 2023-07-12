@@ -1,0 +1,104 @@
+  .table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  
+  th {
+    border-bottom: 2px solid black;
+  }
+  thead tr {
+    border-bottom: 2px solid black;
+  }
+  
+
+  .table>:not(caption)>*>* {
+    padding: 1rem 0.5rem;
+  }
+
+  .post-table-body tr {
+    margin-bottom: 10px;
+  }
+
+  /* 테이블 헤더 스타일 */
+  #post-table thead th {
+    font-weight: bold;
+  }
+
+  /* 페이지네이션 스타일 */
+  .pagination {
+    justify-content: center;
+  }
+
+  .pagination .page-item .page-link {
+    color: #000;
+    border: 1px solid #ddd;
+    margin: 0 2px;
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: #008374;
+    border-color: #008374;
+    color: #fff;
+  }
+
+  .pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #ddd;
+  }
+
+  /* 작성하기 버튼 스타일 */
+  .btn-primary {
+    background-color: #008374;
+    border-color: #008374;
+  }
+
+  .btn-primary:hover {
+    background-color: #0e554d;
+    border-color: #0e554d;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    padding-left: 150px;
+    margin-bottom: 10px;
+  }
+
+  .search-container .dropdown {
+    margin-right: 10px;
+  }
+
+  .search-container .form-control {
+    width: 300px;
+  }
+
+
+  .language-selection input {
+    display: none;
+  }
+  
+  .language-selection input[type=radio]+label {
+    display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 90px;
+    border: 1px solid #333;
+    line-height: 24px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .language-selection input[type=radio]:checked+label {
+    background-color: #008374;
+    color: #fff;
+  }
+  
+
+  

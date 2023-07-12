@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'test/dthead.html' %}
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>눈으로 듣는 배리어프리 자막 서비스</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <!-- Vendor JS Files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <!-- Template Main CSS File -->
+  <link href="../static/assets/css/main.css" rel="stylesheet">
+  <link herf="../static/css/mypage.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center">
+        <h1>눈으로 듣는 배리어프리<br> 자막 서비스<span>!</span></h1>
+      </a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url 'user:index' %}">홈</a></li>
+          <li><a href="/#about">정보</a></li>
+          <li><a href="/#team">팀원 </a></li>
+		  <li><a href="{% url 'user:blog' %}">자막 게시판</a></li>
+          <li><a href="{% url 'user:upload' %}">자막 생성</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'user:logout' %}">로그아웃</a></li>
+          {% else %}
+          <li><a href="" class="js-activation-button"></a></li>
+          {% endif %}
+          <li class="dropdown"><a href="#"><span>{% if user.nickname %}{{ user.nickname }}{% else %}{{ user.username }}{% endif %}</span> <i class="bi bi-person-circle"></i></a>
+			<ul>
+				<li><a href="{% url 'user:mypage' user.id %}">내정보</a></li>
+				<li><a href="{% url 'user:my_post' %}">내가 쓴 글</a></li>
+				<li><a href="{% url 'user:logout' %}">로그아웃</a></li>
+			</ul>
+		  </li>
+        </ul>
+      </nav><!-- .navbar -->
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+    </div>
+  </header><!-- End Header -->
+
+  <div class="breadcrumbs">
+	<div class="page-header d-flex align-items-center" style="background-image: url('');">
+		<div class="container position-relative">
+			<div class="row d-flex justify-content-center">
+				<div class="col-lg-6 text-center">
+					<h2>내정보 수정</h2>
+					<p>내정보 수정을 위한 공간!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<nav>
+		<div class="container">
+			<ol>
+				<li><a href="index.html">홈</a></li>
+				<li>내정보 수정</li>
+			</ol>
+		</div>
+	</nav>
+</div><!-- End Breadcrumbs -->
+	<section class="py-5 my-5">
+		<div class="container">
+		  <div class="bg-white shadow rounded-lg">
+			<div class="profile-tab-nav border-right">
+			  <div class="p-4">
+				<h4 class="text-center mt-4"><i class="bi bi-person-circle" style=""></i>
+				  {% if my.nickname %}
+				  {{ my.nickname }}
+				  {% else %}
+				  {{ my.username }}
+				  {% endif %}
+				</h4>
+			  </div>
+			  <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+				<a class="nav-link active" id="account-tab" data-bs-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
+				  <i class="fa fa-home text-center mr-1"></i>
+				  계정
+				</a>
+				<a class="nav-link" id="password-tab" data-bs-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
+				  <i class="fa fa-key text-center mr-1"></i>
+				  비밀번호
+				</a>
+				<a class="nav-link" id="notification-tab" data-bs-toggle="pill" href="#notification" role="tab" aria-controls="notification" aria-selected="false">
+				  <i class="fa fa-bell text-center mr-1"></i>
+				  회원 탈퇴
+				</a>
+			  </div>
+			</div>
+
+			<form method="POST" action="{% url 'user:mypage_update' user.id %}">
+				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+				{% csrf_token %}
+				<div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+				  <h3 class="mb-4">계정 정보 변경</h3>
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label>닉네임</label>
+						<input name="nickname" type="text" class="form-control" placeholder="닉네임" value="{{ my.nickname }}" required>
+					  </div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label>이메일</label>
+						<input type="text" class="form-control" placeholder="이메일" value="{{ my.email }}">
+					  </div>
+					</div>
+				  </div>
+				  <div>
+					<button type="submit" class="btn btn-primary mt-2">변경하기</button>
+					<button class="btn btn-danger mt-2">취소</button>
+				  </div>
+				</div>
+			  </form>
+			  <form method="POST" action="{% url 'user:new_password' user.id %}">
+				{% csrf_token %}
+				<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+				  <h3 class="mb-4">비밀번호 변경</h3>
+				  <div class="row">
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label>새로운 비밀번호</label>
+						<input name="new_password" type="password" class="form-control" required>
+					  </div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group">
+						<label>비밀번호 재확인</label>
+						<input type="password" class="form-control" required>
+					  </div>
+					</div>
+				  </div>
+				  <div>
+					<button type="submit" class="btn btn-primary mt-2">변경하기</button>
+					<button class="btn btn-danger mt-2">취소</button>
+				  </div>
+				</div>
+			  </form>			  
+			</div>
+		  </div>
+		</div>
+	  </section>
+	  
+	  
+
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<p>변경이 완료되었습니다.</p>
+		</div>
+	</div>
+
+	<form method="POST" action="{% url 'user:withdraw'%}">
+		{% csrf_token %}
+		<div id="myModal2" class="modal">
+		  <div id="modal-content-delete" class="modal-content">
+			<span class="close">&times;</span>
+			<p style="text-align: center;">회원 탈퇴하시겠습니까?</p>
+			<div class="btn-group" style="margin-top: 10px;">
+			  <button type="submit" id="delete-confirm-btn" class="btn btn-primary btn-sm ms-2">확인</button>
+			  <button class="btn btn-danger btn-sm close ms-2" style="font-size:20px; border:5px;">취소</button>
+			</div>
+		  </div>
+		</div>
+	  </form>
+	  
+	
+	  
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="fcontainer">
+      <div class="row gy-4">
+        <div class="col-lg-12 col-md-12 footer-info">
+          <a href="/index" class="logo d-flex align-items-center justify-content-center">
+            <span>충북/충남</span>
+            <span> 29조</span>
+          </a>
+          <p></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="credits mb-3">
+        <a href="https://www.plip.kr/pcc/eb90acbf-fdc5-49c9-ab97-495b86eff48e/privacy-policy">개인정보 처리 방침</a>
+      </div>
+      <div class="copyright">
+        &copy; Copyright <strong><span>29조</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">29조</a>
+      </div>
+    </div>
+
+  </footer><!-- End Footer -->
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/aos/aos.js"></script>
+  <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../static/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../static/assets/js/main.js"></script>
+  {% include 'test/dtscript.html' %}
+  <script>
+	$(document).ready(function() {
+		$(".btn-primary").click(function() {
+		  $("#myModal").css("display", "block");
+		});
+	  
+		$("#notification-tab").click(function() {
+		  $("#myModal2").css("display", "block");
+		});
+	  
+		$(".close").click(function() {
+		  $("#myModal").css("display", "none");
+		  $("#myModal2").css("display", "none");
+		});
+	  
+		$("#delete-confirm-btn").click(function() {
+		  alert("회원 탈퇴가 완료되었습니다.");
+		  $("#myModal2").css("display", "none");
+		});
+	  
+		$(".btn-secondary.close").click(function() {
+		  $("#myModal2").css("display", "none");
+		  $('a[href="/"]').tab('show'); // 탭으로 이동
+		});
+	  });
+
+  </script>	  
+</body>
+
+</html>

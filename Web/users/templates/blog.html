@@ -1,0 +1,190 @@
+{% load static %}
+<html lang="ko">
+  {% include 'test/head.html' %}
+  <link rel="stylesheet" href="../static/css/blog.css">
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center">
+      <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center">
+          <h1>눈으로 듣는 배리어프리<br> 자막 서비스<span>!</span></h1>
+        </a>
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a href="/#hero">홈</a></li>
+            <li><a href="/#about">정보</a></li>
+            <li><a href="/#team">팀원</a></li>
+            <li><a href="{% url 'user:blog' %}">자막 게시판</a></li>
+            <li><a href="{% url 'user:upload' %}">자막 생성</a></li>
+            {% if user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#"><span>{% if user.nickname %}{{ user.nickname }}{% else %}{{ user.username }}{% endif %}</span> <i class="bi bi-person-circle"></i></a>
+                <ul>
+                  <li><a href="{% url 'user:mypage' user.id %}">내정보</a></li>
+                  <li><a href="{% url 'user:my_post' %}">내가 쓴 글</a></li>
+                  <li><a href="{% url 'user:logout' %}">로그아웃</a></li>
+                </ul>
+              </li>
+            {% else %}
+              <li><a href="" class="js-activation-button">로그인</a></li>
+            {% endif %}
+          </ul>
+        </nav><!-- .navbar -->
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      </div>
+    </header><!-- End Header -->
+    <!-- End Header -->
+
+    <!-- breadcrumbs Start-->
+    <main id="main">
+      <div class="breadcrumbs">
+        <div class="page-header d-flex align-items-center" style="background-image: url('');">
+          <div class="container position-relative">
+            <div class="row d-flex justify-content-center">
+              <div class="col-lg-6 text-center">
+                <h2>자막 게시판</h2>
+                <p>생성된 자막을 공유를 위한 작성 공간!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav>
+          <div class="container">
+            <ol>
+              <li><a href="{% url 'user:index' %}">홈</a></li>
+              <li>자막 게시판</li>
+            </ol>
+          </div>
+        </nav>
+      </div>
+      <!-- breadcrumbs End-->
+
+      <!--Search bar Start-->
+      <div class="container1">
+        <div class="row">
+          <div class="ms-3" style="margin-left: 9rem">
+            <div class="search-container">
+              <div class="language-selection mt-5" style="margin-right: 55rem">
+                <input type="radio" id="none" name="language" value="none" data-language="none" checked>
+                <label for="none" class="language-button">All</label>
+                <input type="radio" id="ko" name="language" value="ko" data-language="ko">
+                <label for="ko" class="language-button">Ko</label>
+                <input type="radio" id="en" name="language" value="en" data-language="en">
+                <label for="en" class="language-button">En</label>
+              </div>
+              <div class="d-flex justify-content-end">
+                <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle mt-5 me-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    제목
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" onclick="changeDropdown('제목')">제목</a></li>
+                    <li><a class="dropdown-item" onclick="changeDropdown('작성자')">작성자</a></li>
+                  </ul>
+                </div>
+                <input type="text" class="form-control mt-5" placeholder="검색어를 입력하세요" id="search-input" oninput="searchTable(this)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Search bar End-->
+
+      <div id="blog" class="mt-2 justify-center-center">
+        <div style="padding-left: 10%; padding-right: 10%;">
+          <table id="post-table" class="table" style="max-height: 400px; overflow-y: scroll;">
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th class="text-center">제목</th>
+                <th>작성자</th>
+                <th>날짜</th>
+                <th>조회수<button id="sort-button" onclick="sortTable()" class="border-0 bg-transparent"><i class="bi bi-caret-up-fill"></i></button></th>
+                <th>언어</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for list in posts %}
+              <tr class="post-row">
+                <td>{{ forloop.counter }}</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <a href="{% url 'user:blogdt' list.id %}" class="post-link"><span class="post-title">{{ list.title }}</span></a>
+                  </div>
+                </td>
+                <td>{{ list.author }}</td>
+                <td>{{ list.date.year }}년 {{ list.date.month }}월 {{ list.date.day }}일</td>
+                <td class="text-center">{{ list.view_count }}</td>
+                <td>{{ list.language }}</td>
+              </tr>
+              {% endfor %}
+              {% if posts|length == 0 %}
+              <tr>
+                <td colspan="6" class="text-center">검색 결과가 없습니다.</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+        <div class="container text-end mt-3" style="margin-left:400px;">
+          <button class="btn btn-primary" onclick="window.location.href='{% url 'user:create' %}'">작성하기</button>
+        </div>
+        <div class="pagination justify-content-center">
+          <ul class="pagination">
+            {% if posts.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1">처음</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ posts.previous_page_number }}">&lt;</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">처음</span>
+              </li>
+              <li class="page-item disabled">
+                <span class="page-link">&lt;</span>
+              </li>
+            {% endif %}
+            {% for num in posts.paginator.page_range %}
+              {% if num == posts.number %}
+                <li class="page-item active">
+                  <span class="page-link">{{ num }}</span>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+            {% if posts.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ posts.next_page_number }}">&gt;</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ posts.paginator.num_pages }}">끝</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">&gt;</span>
+              </li>
+              <li class="page-item disabled">
+                <span class="page-link">끝</span>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+
+    </main><!-- End #main -->
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+    {% include 'test/script.html' %}
+    {% include 'test/footer.html' %}
+    <script src="../static/js/blog.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-dLgMx6iBGiSc7zNIR9v3e2e0oJmKYr76Yg/Cz5kuH+yamUyIyBoKXc+qTd3c3O7HaPnpde5xopzqUYf1ZnauDg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </body>
+</html>

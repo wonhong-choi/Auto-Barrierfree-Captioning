@@ -1,0 +1,138 @@
+.container_blog {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.my-input,
+.my-textarea,
+.my-file-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #008374;
+    border-radius: 4px;
+}
+
+.my-hr {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+.language-selection {
+    margin-top: 10px;
+}
+
+.button-container {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #008374;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #1f8700;
+}
+
+.btn-danger {
+    background-color: #ff4747;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #e62020;
+}
+
+.btn-custom {
+    animation: none; /* 초기에 애니메이션을 중지시킴 */
+  }
+  
+  .btn-custom:hover {
+    animation: pulse 1s infinite; /* 마우스를 가져갔을 때 애니메이션을 작동시킴 */
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+    }
+  
+    70% {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+  
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+  }
+  
+
+  .table-bordered {
+    border: 1px solid #dee2e6;
+  }
+
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid #dee2e6;
+  }
+
+  .search-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .search-container .dropdown {
+    margin-right: 10px;
+  }
+
+  .search-container .form-control {
+    width: 300px;
+  }
+
+
+    .language-selection{
+        padding: 15px 10px;
+    }
+    .language-selection input{
+        display: none;
+    }
+    .language-selection input[type=radio]+label{
+        display: inline-block;
+        cursor: pointer;
+        height: 24px;
+        width: 90px;
+        line-height: 24px;
+        text-align: center;
+        font-weight:bold;
+        font-size:13px;
+    }
+    .language-selection input[type=radio]+label{
+        background-color: #fff;
+        color: #333;
+    }
+    .language-selection input[type=radio]:checked+label{
+        background-color: #008374;
+        color: #fff;
+    }

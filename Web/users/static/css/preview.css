@@ -1,0 +1,25 @@
+.video-preview {
+    max-width: 500px;
+    max-height: 500px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.video-preview video {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin-right: 10px;
+}
+
+@media (max-width: 991px) {
+    .video-preview video {
+        width: 100px;
+        height: auto;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+}

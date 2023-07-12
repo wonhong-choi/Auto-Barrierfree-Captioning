@@ -1,0 +1,115 @@
+{% load static %}
+{% load socialaccount %}
+<html>
+  <link rel="stylesheet" href="{% static 'css/upload.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  {% include 'test/head.html' %}
+  <style>
+    .bi-bell-fill-red {
+    color: red !important;
+    }
+  </style>
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center">
+      <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center">
+          <h1>눈으로 듣는 배리어프리<br> 자막 서비스<span>!</span></h1>
+        </a>
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a href="/#hero">홈</a></li>
+            <li><a href="/#about">정보</a></li>
+            <li><a href="/#team">팀원</a></li>
+            <li><a href="{% url 'user:blog' %}">자막 게시판</a></li>
+            <li><a href="{% url 'user:upload' %}">자막 생성</a></li>
+              {% if user.is_authenticated %}
+              <li class="dropdown"><a href="#"><span>{% if user.nickname %}{{ user.nickname }}{% else %}{{ user.username }}{% endif %}</span> <i class="bi bi-person-circle"></i></a>
+                <ul>
+                  <li><a href="{% url 'user:mypage' user.id %}">내정보</a></li>
+                  <li><a href="{% url 'user:my_post' %}">내가 쓴 글</a></li>
+                  <li><a href="{% url 'user:logout' %}">로그아웃</a></li>
+                </ul>
+              </li>
+              {% else %}
+              <li><a href="/" class="js-activation-button">로그인</a></li>
+              {% endif %}
+          </ul>
+        </nav><!-- .navbar -->
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      </div>
+    </header><!-- End Header -->
+    
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row">
+        <div class="container1">
+          <c1>자막 생성하기</c1>  
+          <div class="upload-container">
+            <label for="videoInput" class="upload-label">
+              <i class="fas fa-cloud-upload-alt"></i> 파일 선택
+            </label>
+            <input name="file" type="file" id="videoInput" accept="video/*">
+            <div id="filePreviewContainer" class="file-preview-container" sytle="height: 650px;">
+              <p id="filePreviewText">파일을 선택해주세요.</p>
+              <div id="videoPreviewContainer" class="video-preview-container">
+                <video id="videoPreview" controls></video>
+              </div>
+            </div>
+          </div>
+          <div class="button-container">
+            <button id="uploadButton" disabled>
+              자막 생성
+            </button>
+            <button id="subtitleDLButton" style= "display: none">
+              자막 다운로드
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <button id="viewVideoButton" style="display: none; margin-top: 5px; margin-bottom: 25px">보러가기</button>
+    <!-- Modal Container -->
+    <div id="videoModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modalVideoContainer">
+          <video id="modalVideo" controls>
+            <track src="" id="modalSubtitles" kind="subtitles" label="BarrierFree" default>
+          </video>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  <footer class="footer">
+    <div class="fcontainer">
+      <div class="row gy-4">
+        <div class="col-lg-12 col-md-12 footer-info">
+          <a href="/index" class="logo d-flex align-items-center justify-content-center">
+            <span>충북/충남</span>
+            <span> 29조</span>
+          </a>
+          <p></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="credits mb-3">
+        <a href="https://www.plip.kr/pcc/eb90acbf-fdc5-49c9-ab97-495b86eff48e/privacy-policy">개인정보 처리 방침</a>
+      <div class="copyright">
+        &copy; Copyright <strong><span>29조</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">29조</a>
+      </div>
+    </div>
+  </footer>
+  </body>
+  <script src="../static/js/sub_test2.js"></script>
+  {% include 'test/script.html' %}
+</html>

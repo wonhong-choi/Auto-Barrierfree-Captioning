@@ -1,0 +1,250 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.videoPreviewContainer {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 20px;
+}
+
+#videoPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.container1 {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out 0.5s forwards;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #fff;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out 0.5s forwards;
+}
+
+.upload-container {
+  margin-bottom: 20px;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #008374;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-label:hover {
+  background-color: #006d65;
+}
+
+#videoInput {
+  display: none;
+}
+
+.file-preview-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #fff;
+}
+
+#filePreviewText {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.video-preview-container {
+  width: 100%;
+  height: auto;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+#videoPreview {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-container button {
+  margin: 0 5px;
+}
+
+
+
+#uploadButton {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #008374;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out 1s forwards;
+}
+
+#uploadButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+#uploadButton:hover {
+  background-color: #006d65;
+}
+
+
+#subtitleDLButton {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #008374;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out 1s forwards;
+}
+
+#subtitleDLButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+#subtitleDLButton:hover {
+  background-color: #006d65;
+}
+.custom-alert {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #008374;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.delete-button {
+  display: inline-block;
+  padding: 5px;
+  background-color: #ff5b5b;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #e52c2c;
+}
+
+.result-container {
+  margin-top: 30px;
+}
+
+.subtitle-container {
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.video-container {
+  display: none;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+#uploadedVideo {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.footer {
+  background-color: #008374;
+  padding: 20px 0;
+  color: #fff;
+  text-align: center;
+}
+
+
+.modal-content {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out 0.5s forwards;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.modalVideo {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+

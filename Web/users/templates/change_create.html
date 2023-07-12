@@ -1,0 +1,123 @@
+{% load static %}
+<html lang="ko">
+{% include 'test/head.html' %}
+<link rel="stylesheet" href="../static/css/blog_create.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+            <a href="{% url 'user:index' %}" class="logo d-flex align-items-center">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <h1>BarrierFree_Sub<span>!</span></h1>
+            </a>
+            <nav id="navbar" class="navbar">
+                <ul>
+                  <li><a href="#hero">홈</a></li>
+                  <li><a href="#about">정보</a></li>
+                  <li><a href="#team">팀원</a></li>
+                  <li><a href="{% url 'user:blog' %}">게시판</a></li>
+                  <li><a href="{% url 'user:upload' %}">자막 생성</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'user:logout' %}">로그아웃</a></li>
+                    {% else %}
+                    <li><a href="" class="js-activation-button">로그인</a></li>
+                    {% endif %}
+                </ul>
+              </nav><!-- .navbar -->
+            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+        </div>
+    </header><!-- End Header -->
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs">
+        <div class="page-header d-flex align-items-center" style="background-image: url('');">
+            <div class="container position-relative">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <h2>게시글 수정</h2>
+                        <p>생성된 게시글을 수정 할 수 있는 공간!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ol>
+                    <li><a href="index.html">홈</a></li>
+                    <li><a href="">게시글</a><li>
+                    <li>게시글 작성</li>
+                </ol>
+            </div>
+        </nav>
+    </div><!-- End Breadcrumbs -->
+    
+    <div class="container_blog mt-3 mb-3">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="id_title" class="form-label">제목</label>
+                <input type="text" class="my-input" id="id_title" name="title" value="{{ post.title }}" required>
+            </div>
+            <hr class="my-hr">
+            
+            <div class="mb-3">
+                <label for="id_content" class="form-label">내용</label>
+                <textarea class="my-textarea" id="id_content" name="content" rows="5" required>{{ post.content }}</textarea>
+            </div>
+            <hr class="my-hr">
+            
+            <div class="mb-3">
+                <label for="id_file" class="form-label">파일 업로드</label>
+                <input type="file" class="my-file-input" id="id_file" name="file" required>
+                {% if post.file %}
+                <p>현재 파일: {{ post.get_filename }}</p>
+                {% else %}
+                <p>현재 파일: 없음</p>
+                {% endif %}
+            </div>
+            <hr class="my-hr">
+            
+            <div class="language-selection">
+                <input type="radio" id="ko" name="language" value="ko" checked>
+                <label for="ko" class="language-button">한글</label>
+                <input type="radio" id="en" name="language" value="en">
+                <label for="en" class="language-button">영어</label>
+            </div>
+            <hr class="my-hr">
+            
+            <div class="button-container">
+                <input type="hidden" name="author" value="{{ request.user.id }}">
+                <button type="submit" class="btn btn-primary btn-custom">작성</button>
+                <button type="button" class="btn btn-danger btn-custom ms-2" data-bs-toggle="modal" data-bs-target="#confirmModal">나가기</button>
+            </div>           
+        </form>
+    </div>
+    <!-- 확인용 Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">게시글 작성 취소</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    정말 작성을 취소 하시겠습니까?
+                </div>  
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">돌아가기</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'user:blog' %}'">네</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Files -->
+    {% include 'test/script.html' %}
+    {% include 'test/footer.html' %}
+    <link href="../static/js/blog_create.css">
+</body>
+</html>

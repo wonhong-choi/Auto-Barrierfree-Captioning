@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'test/dthead.html' %}
+<link href="{% static 'css/blogdt.css' %}" rel="stylesheet">
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="/" class="logo d-flex align-items-center">
+        <h1>눈으로 듣는 배리어프리<br> 자막 서비스<span>!</span></h1>
+      </a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/#hero">홈</a></li>
+          <li><a href="/#about">정보</a></li>
+          <li><a href="/#team">팀원</a></li>
+          <li><a href="{% url 'user:blog' %}">자막 게시판</a></li>
+          <li><a href="{% url 'user:upload' %}">자막 생성</a></li>
+            {% if user.is_authenticated %}
+            <li class="dropdown"><a href="#"><span>{% if user.nickname %}{{ user.nickname }}{% else %}{{ user.username }}{% endif %}</span> <i class="bi bi-person-circle"></i></a>
+              <ul>
+                <li><a href="{% url 'user:mypage' user.id %}">내정보</a></li>
+                <li><a href="#">내가 쓴 글</a></li>
+                <li><a href="{% url 'user:logout' %}">로그아웃</a></li>
+              </ul>
+            </li>
+            {% else %}
+            <li><a href="" class="js-activation-button">로그인</a></li>
+            {% endif %}
+        </ul>
+      </nav><!-- .navbar -->
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+    </div>
+  </header><!-- End Header -->
+  <!-- End Header -->
+
+  <main id="main">
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs">
+      <div class="page-header d-flex align-items-center" style="background-image: url('');">
+        <div class="container position-relative">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 text-center">
+              <h2>게시판</h2>
+              <p>여기서 자막을 공유하거나 다운로드 할 수 있습니다!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <div class="container">
+          <ol>
+            <li><a href="{% url 'user:index' %}">홈</a></li>
+            <li>자막 공유 게시판</li>
+            <li class="active">자막 공유 게시판 내용<li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Blog Details Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row g-5">
+
+          <div class="col-lg-12">
+
+            <article class="blog-details">
+              <h2 class="title">{{post.title}}</h2>
+              <div class="meta-top">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="">{{post.author}}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i><time datetime="{{post.date|date:'Y-m-d'}}">{{post.date|date:'Y년 m월 d일'}}</time></li>
+
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href=""> 댓글 </a></li>
+                  <hr>
+                  <li class="d-flex align-items-center"><i class="bi bi-file-earmark-arrow-down"></i> <a href="{% url 'user:download_file' post_id=post.id %}">{{ post.get_filename }}</a></li>
+                  <hr>
+                </ul>
+              </div><!-- End meta top -->
+
+              <div class="content">
+                <p>
+                  {{ post.content }}
+                </p>
+              </div><!-- End post content -->
+            </article><!-- End blog post -->
+            <div class="button-group mt-4">
+              <button onclick="history.go(-1);" class="btn btn-primary float-end">뒤로가기</button>
+              {% if user.is_authenticated and user == post.author %}
+              <button onclick="window.location.href='{% url 'user:delete' post.id %}'"class="btn btn-danger float-end me-2">삭제</button>
+              <button onclick="window.location.href='{% url 'user:edit' post.id %}'" class="btn btn-primary float-end me-2">수정</button>
+              {% endif %}
+            </div>
+
+
+            {% if post.reply_set %}
+            <div class="comments">
+              <h4 class="comments-count">댓글</h4>
+              {% for reply in post.reply_set.all %}
+              <div id="comment-1" class="comment">
+                <div class="d-flex">
+                  <div>
+                    <div class="comment-bubble">
+                      <h5><a href="">{{ reply.author }}</a></h5>
+                      <time datetime="{{ reply.create_date|date:'Y-m-d H:i' }}">{{ reply.create_date|date:'Y년 m월 d일 H시i분' }}</time>
+                      <hr>
+                      <p>
+                        {{ reply.contents }}
+                      </p>
+                      <hr>
+                      <p class="comment-actions">
+                        {% if user.is_authenticated and user == reply.author %}
+                        <button onclick="window.location.href='{% url 'user:edit_comment' post.id reply.id  %}'" class="btn btn-sm btn-primary edit-reply-btn">수정</button>
+                        <button onclick="window.location.href='{% url 'user:delete_comment' post.id reply.id  %}'" class="btn btn-sm btn-danger delete-reply-btn">삭제</button>
+                        {% endif %}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+            
+            
+            <div class="reply-form mt-3">
+              <h4>댓글 남기기</h4>
+              {% comment %} <p> * </p> {% endcomment %}
+              <form action="/reply/create/{{ post.id }}" method="POST">
+                {% csrf_token %}
+                {% comment %} {{ replyForm }} {% endcomment %}
+                <div class="row">
+                  <div class="col form-group">
+                    <textarea name="contents" class="form-control" placeholder="여기에 댓글을 남겨주세요!*" required></textarea>
+                  </div>
+                </div>
+                <input type="hidden" name="author" value="{{ request.user.id }}">
+                <button type="submit" class="btn btn-primary mt-2">작성</button>
+              </form>
+            </div>
+
+    </section><!-- End Blog Details Section -->
+      
+  </main><!-- End #main -->
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+  <script src="{% static 'js/blogdt.js' %}"></script>
+  {% include 'test/dtscript.html' %}
+  {% include 'test/footer.html' %}  
+</body>
+</html>
